@@ -24,7 +24,13 @@ function compile_html (file, opts) {
   if (!module_name) {
     // We consider it to be a regular html template and just create it for an 'app'
     module_name = opts.default_module_name;
-    templates = [{name: file.path.replace(file.base, ''), contents: JSON.stringify(contents)}];
+
+    var webPath = file.path.replace(file.base, '');
+    if (path.sep === '\\') {
+        webPath = webPath.replace(/\\/g, '/');
+    }
+
+    templates = [{ name: webPath, contents: JSON.stringify(contents) }];
   } else {
 
     _.each($('require'), function (req) {
